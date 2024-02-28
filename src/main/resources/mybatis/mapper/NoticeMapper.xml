@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.project.property.entity.Notice">
+    <!--@mbg.generated-->
+    <!--@Table notice-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
+    <result column="news_img" jdbcType="VARCHAR" property="newsImg" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, title, content, create_date, news_img, user_name, user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from notice
+    where id IN (${ids})
+  </delete>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.Notice" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="newsImg != null and newsImg != ''">
+        news_img,
+      </if>
+      <if test="userName != null and userName != ''">
+        user_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="newsImg != null and newsImg != ''">
+        #{newsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null and userName != ''">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.Notice">
+    <!--@mbg.generated-->
+    update notice
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="newsImg != null">
+        news_img = #{newsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectDataByParam" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM notice
+    <where>
+      <if test="title != null and title != ''">
+        title LIKE CONCAT('%', #{title}, '%')
+      </if>
+      <if test="userId != null">
+        AND user_id = #{userId}
+      </if>
+    </where>
+    ORDER BY create_date DESC, id DESC
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    SELECT COUNT(1)
+    FROM notice
+    <where>
+      <if test="title != null and title != ''">
+        title LIKE CONCAT('%', #{title}, '%')
+      </if>
+      <if test="userId != null">
+        AND user_id = #{userId}
+      </if>
+    </where>
+  </select>
+</mapper>

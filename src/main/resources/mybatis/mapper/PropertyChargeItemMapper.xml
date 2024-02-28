@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.PropertyChargeItemMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.PropertyChargeItem">
+        <!--@mbg.generated-->
+        <!--@Table property_charge_item-->
+        <id column="id" property="id"/>
+        <result column="charge_name" property="chargeName"/>
+        <result column="create_date" property="createDate"/>
+        <result column="item_price" property="itemPrice"/>
+        <result column="price_desc" property="priceDesc"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, charge_name, create_date, item_price, price_desc
+    </sql>
+
+    <!-- 根据主键查询数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from property_charge_item
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from property_charge_item
+        where id IN (${ids})
+    </delete>
+
+    <!-- 全量插入 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.PropertyChargeItem"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into property_charge_item (charge_name, create_date, item_price, price_desc)
+        values (#{chargeName,jdbcType=VARCHAR}, #{createDate}, #{itemPrice}, #{priceDesc,jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.project.property.entity.PropertyChargeItem" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into property_charge_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="chargeName != null">
+                charge_name,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="itemPrice != null">
+                item_price,
+            </if>
+            <if test="priceDesc != null and priceDesc != ''">
+                price_desc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="chargeName != null">
+                #{chargeName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="itemPrice != null">
+                #{itemPrice},
+            </if>
+            <if test="priceDesc != null and priceDesc != ''">
+                #{priceDesc},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.PropertyChargeItem">
+        <!--@mbg.generated-->
+        update property_charge_item
+        <set>
+            <if test="chargeName != null">
+                charge_name = #{chargeName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="itemPrice != null">
+                item_price = #{itemPrice},
+            </if>
+            <if test="priceDesc != null and priceDesc != ''">
+                price_desc = #{priceDesc},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键更新数据  -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.PropertyChargeItem">
+        <!--@mbg.generated-->
+        update property_charge_item
+        set charge_name = #{chargeName,jdbcType=VARCHAR},
+            create_date = #{createDate},
+            price_desc  = #{priceDesc},
+            item_price  = #{itemPrice}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据条件查询数据 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select *
+        from `property_charge_item`
+    </select>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `property_charge_item`
+    </select>
+
+    <!-- 根据多个ID查询 -->
+    <select id="selectInfoByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `property_charge_item`
+        where id IN (${ids})
+    </select>
+</mapper>

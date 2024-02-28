@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>小区物业管理系统</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="stylesheet" href="../../static/adminStatic/css/font.css" th:href="@{/adminStatic/css/font.css}">
+    <link rel="stylesheet" href="../../static/adminStatic/css/xadmin.css" th:href="@{/adminStatic/css/xadmin.css}">
+    <link rel="stylesheet" href="" th:href="@{/adminStatic/css/theme10black.min.css}">
+    <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
+    <script th:src="@{/webjars/layui/2.5.6/layui.js}" src="" type="text/javascript"></script>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.js}" src="" type="text/javascript"></script>
+    <script type="text/javascript" src="../../static/adminStatic/js/xadmin.js"
+            th:src="@{/adminStatic/js/xadmin.js}"></script>
+    <script type="text/javascript" src="../../static/adminStatic/js/xadmin.js"
+            th:src="@{/adminStatic/js/MyLayuiUtils.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+
+        // 是否开启刷新记忆tab功能
+        // var is_remember = false;
+    </script>
+</head>
+<body class="index">
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo">
+        <a href="javascript:;" style="padding-left: 0px; width: 220px; text-align: center">小区物业管理系统</a>
+    </div>
+    <div class="left_open">
+        <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+    </div>
+
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" th:href="@{/index}" target="_blank">前台首页</a>
+        </li>
+    </ul>
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<!-- 左侧菜单开始 -->
+<div class="left-nav" style="overflow-y: auto">
+    <div style="width: 100%; height: 180px;" id="head_div">
+        <div style="width: 130px; height: 130px; border-radius: 50%; overflow:hidden; margin: 0 auto;">
+            <img src="" th:src="@{/adminStatic/images/head_1.jpg}" alt="" width="130">
+        </div>
+        <div style="width: 100%; color:rgba(255, 255, 255, 0.74); text-align: center; line-height: 50px">
+            当前用户：<span th:text="${session.loginAdmin.getLoginName()}"></span>
+        </div>
+    </div>
+    <div id="side-nav">
+        <ul id="nav">
+
+            <!-- 用户管理 -->
+            <li th:if="${session.parentMenu != null}" th:each="parent : ${session.parentMenu}">
+                <a href="javascript:;" th:if="${not #strings.isEmpty(parent.menu.url)}" class="click_a"
+                   th:tabName="${parent.menu.menuName}" th:tabUrl="${parent.menu.url}">
+                    <i class="left-nav-li iconfont" th:lay-tips="${parent.menu.menuName}"
+                       th:utext="${parent.menu.iconName}"></i>
+                    <cite th:text="${parent.menu.menuName}"></cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <a href="javascript:;" th:if="${#strings.isEmpty(parent.menu.url)}">
+                    <i class="iconfont left-nav-li" th:lay-tips="${parent.menu.menuName}"
+                       th:utext="${parent.menu.iconName}"></i>
+                    <cite th:text="${parent.menu.menuName}"></cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu" th:if="${#strings.isEmpty(parent.menu.url)}">
+                    <!-- 循环找出parent_id与当前以及菜单的id一致的子级菜单 -->
+                    <li th:each="sub : ${session.subMenu}" th:if="${parent.menu.id == sub.menu.parentId}">
+                        <a th:if="${sub.menu.menuName != '修改信息'}" href="javascript:;" class="click_a"
+                           style="padding: 12px 15px 12px 22px"
+                           th:tabName="${sub.menu.menuName}" th:tabUrl="${sub.menu.url}">
+                            <i class="iconfont left-nav-li" th:lay-tips="${sub.menu.menuName}"
+                               th:utext="${sub.menu.iconName}"></i>
+                            <cite th:text="${sub.menu.menuName}"></cite>
+                        </a>
+                        <a th:if="${sub.menu.menuName == '修改信息'}" href="javascript:;" id="updatePassword"
+                           th:data-id="${session.loginAdmin.id}" style="padding: 12px 15px 12px 22px">
+                            <i class="iconfont left-nav-li" th:lay-tips="${sub.menu.menuName}"
+                               th:utext="${sub.menu.iconName}" th:data-id="${session.loginAdmin.id}"></i>
+                            <cite th:text="${sub.menu.menuName}"></cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- 修改密码 -->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" id="updatePassword" th:data-id="${session.loginAdmin.id}">-->
+            <!--                    <i class="iconfont left-nav-li" lay-tips="修改信息" th:data-id="${session.loginAdmin.id}">&#xe82b;</i>-->
+            <!--                    <cite>修改信息</cite>-->
+            <!--                    <i class="iconfont nav_right">&#xe697;</i></a>-->
+            <!--            </li>-->
+
+            <!-- 退出登录 -->
+            <li>
+                <a href="javascript:;" th:href="@{/system/loginOut}">
+                    <i class="iconfont left-nav-li" lay-tips="退出登录">&#xe69a;</i>
+                    <cite>退出登录</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<!-- <div class="x-slide_left"></div> -->
+<!-- 左侧菜单结束 -->
+<!-- 右侧主体开始 -->
+<div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+        <ul class="layui-tab-title">
+            <li class="home">
+                <i class="layui-icon">&#xe68e;</i>我的桌面
+            </li>
+        </ul>
+        <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+            <dl>
+                <dd data-type="this">关闭当前</dd>
+                <dd data-type="other">关闭其它</dd>
+                <dd data-type="all">关闭全部</dd>
+            </dl>
+        </div>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe th:src="@{system/toWelcomePage}" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+        </div>
+        <div id="tab_show"></div>
+    </div>
+</div>
+<div class="page-content-bg"></div>
+<style id="theme_style"></style>
+<!-- 右侧主体结束 -->
+<!-- 中部结束 -->
+<script>
+    layui.use(['upload', 'layer'], function () {
+
+        var upload = layui.upload, layer = layui.layer;
+
+        $(function () {
+
+            $(".click_a").click(function () {
+                var name = $(this).attr("tabName");
+                var url = $(this).attr("tabUrl");
+                xadmin.add_tab(name, url);
+            })
+
+
+            $("#updatePassword").click(function () {
+                toWindow("adminInfo/toEditWindow?id=" + $(this).attr("data-id"), "新增管理员", "400px", "330px");
+            })
+
+        })
+
+    })
+</script>
+</body>
+
+</html>

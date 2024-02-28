@@ -1,0 +1,66 @@
+#配置服务器相关的属性
+server:
+  port: 2281    #项目端口号
+  servlet:
+    context-path: /housing  #项目访问地址名
+
+#使用druid连接池时需要的配置
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/property?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 注：将SpringBoot默认的DataSource改为DruidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    # 配置数据源其他配置
+    initialSize: 5            #初始化连接池大小
+    minIdle: 5                #minIdle设置最小连接池数量
+    maxActive: 20             #maxActive设置最大连接池数量
+    maxWait: 60000            #获取连接时最大等待时间，单位为毫秒，-1表示无限制
+    timeBetweenEvictionRunsMillis: 60000    #Destroy线程检测连接的间隔时间单位是毫秒
+    minEvictableIdleTimeMillis: 300000      #配置一个连接在池中最小生存的时间，单位是毫秒
+    validationQuery: SELECT 1 FROM DUAL     #检测连接是否有效。
+    testWhileIdle: true       #建议配置为true，不影响性能，并且保证安全性。
+    testOnBorrow: false       #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+    testOnReturn: false       #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+    # 是否缓存preparedStatement，也就是PSCache。
+    # PSCache对支持游标的数据库性能提升巨大，比如说oracle。
+    # 在mysql5.5以下的版本中没有PSCache功能，建议关闭掉。
+    # 5.5及以上版本有PSCache，建议开启。
+    # 如果用Oracle，则把poolPreparedStatements配置为true
+    # mysql可以配置为false。分库分表较多的数据库，建议配置为false
+    poolPreparedStatements: true
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j        #注意SpingBoot 2.x以上使用 slf4j  1.x 使用 log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+  # 禁用缓存，实现F9重新编译页面
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml   #DAO层映射的XML文件
+  config-location: classpath:mybatis/mybatis-config.xml  #Mybatis的全局配置文件
+
+my:
+  mail:
+    host: smtp.qq.com
+    username: 931708230@qq.com
+    password: pwcpllkfdhnubece
+    port: 465
+    from: 931708230@qq.com
+    defaultEncoding: utf-8
+    auth: true
+    timeout: 20000
+    socketFactoryClass: javax.net.ssl.SSLSocketFactory
+    socketFactoryPort: 465
+    sslEnable: true
+

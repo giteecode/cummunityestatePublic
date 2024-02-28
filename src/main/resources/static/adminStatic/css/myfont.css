@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'myfont';  /* project id 1878023 */
+    src: url('//at.alicdn.com/t/font_1878023_rrqzogo88c8.eot');
+    src: url('//at.alicdn.com/t/font_1878023_rrqzogo88c8.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1878023_rrqzogo88c8.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1878023_rrqzogo88c8.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1878023_rrqzogo88c8.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1878023_rrqzogo88c8.svg#iconfont') format('svg');
+}
+/*小号字*/
+.myfont{
+    font-family:"myfont" !important;
+    font-size:12px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+/*中号字*/
+.myfont-xl{
+    font-family:"myfont" !important;
+    font-size:14px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+/*大号字*/
+.myfont-xxl{
+    font-family:"myfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}

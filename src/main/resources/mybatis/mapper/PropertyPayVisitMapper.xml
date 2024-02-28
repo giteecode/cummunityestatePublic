@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.PropertyPayVisitMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.PropertyPayVisit">
+        <!--@mbg.generated-->
+        <!--@Table property_pay_visit-->
+        <id column="id" property="id"/>
+        <result column="charge_id" property="chargeId"/>
+        <result column="building_num" property="buildingNum"/>
+        <result column="unit_num" property="unitNum"/>
+        <result column="house_num" property="houseNum"/>
+        <result column="client_name" property="clientName"/>
+        <result column="item_name" property="itemName"/>
+        <result column="pay_money" jdbcType="INTEGER" property="payMoney"/>
+        <result column="pay_type" property="payType"/>
+        <result column="charge_person" property="chargePerson"/>
+        <result column="pay_date" property="payDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, charge_id, building_num, house_num, client_name, item_name, pay_money, pay_type,
+        charge_person, pay_date, unit_num
+    </sql>
+
+    <!-- 根据主键查询单条数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from property_pay_visit
+        where id = #{id}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from property_pay_visit
+        where id = #{id}
+    </delete>
+
+    <!-- 全量插入数据 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.PropertyPayVisit"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into property_pay_visit (charge_id, building_num, house_num,
+                                        client_name, item_name, pay_money,
+                                        pay_type, charge_person, pay_date, unit_num)
+        values (#{chargeId}, #{buildingNum,jdbcType=VARCHAR}, #{houseNum,jdbcType=VARCHAR},
+                #{clientName,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, #{payMoney},
+                #{payType,jdbcType=VARCHAR}, #{chargePerson,jdbcType=VARCHAR}, #{payDate,jdbcType=VARCHAR}
+                       , #{unitNum})
+    </insert>
+
+    <!-- 选择性插入数据 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.project.property.entity.PropertyPayVisit" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into property_pay_visit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="chargeId != null">
+                charge_id,
+            </if>
+            <if test="buildingNum != null">
+                building_num,
+            </if>
+            <if test="houseNum != null">
+                house_num,
+            </if>
+            <if test="clientName != null">
+                client_name,
+            </if>
+            <if test="itemName != null">
+                item_name,
+            </if>
+            <if test="payMoney != null">
+                pay_money,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="chargePerson != null">
+                charge_person,
+            </if>
+            <if test="payDate != null">
+                pay_date,
+            </if>
+            <if test="unitNum != null and unitNum != ''">
+                unit_num,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="chargeId != null">
+                #{chargeId},
+            </if>
+            <if test="buildingNum != null">
+                #{buildingNum,jdbcType=VARCHAR},
+            </if>
+            <if test="houseNum != null">
+                #{houseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="clientName != null">
+                #{clientName,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="payMoney != null">
+                #{payMoney},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="chargePerson != null">
+                #{chargePerson,jdbcType=VARCHAR},
+            </if>
+            <if test="payDate != null">
+                #{payDate,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNum != null and unitNum != ''">
+                #{unitNum,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.PropertyPayVisit">
+        <!--@mbg.generated-->
+        update property_pay_visit
+        <set>
+            <if test="chargeId != null">
+                charge_id = #{chargeId},
+            </if>
+            <if test="buildingNum != null">
+                building_num = #{buildingNum,jdbcType=VARCHAR},
+            </if>
+            <if test="houseNum != null">
+                house_num = #{houseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="clientName != null">
+                client_name = #{clientName,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                item_name = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="payMoney != null">
+                pay_money = #{payMoney},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="chargePerson != null">
+                charge_person = #{chargePerson,jdbcType=VARCHAR},
+            </if>
+            <if test="payDate != null">
+                pay_date = #{payDate,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNum != null">
+                unit_num = #{unitNum,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.PropertyPayVisit">
+        <!--@mbg.generated-->
+        update property_pay_visit
+        set charge_id     = #{chargeId},
+            building_num  = #{buildingNum,jdbcType=VARCHAR},
+            house_num     = #{houseNum,jdbcType=VARCHAR},
+            client_name   = #{clientName,jdbcType=VARCHAR},
+            item_name     = #{itemName,jdbcType=VARCHAR},
+            pay_money     = #{payMoney},
+            pay_type      = #{payType,jdbcType=VARCHAR},
+            charge_person = #{chargePerson,jdbcType=VARCHAR},
+            unit_num      = #{unitNum,jdbcType=VARCHAR},
+            pay_date      = #{payDate,jdbcType=VARCHAR}
+        where id = #{id}
+    </update>
+
+    <!-- 根据条件查询数据 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `property_pay_visit`
+        <where>
+            <if test="itemName != null and itemName != ''">
+                item_name = #{itemName}
+            </if>
+            <if test="clientName != null and clientName != ''">
+                client_name = #{clientName}
+            </if>
+        </where>
+        order by pay_date DESC
+    </select>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `property_pay_visit`
+        <where>
+            <if test="itemName != null and itemName != ''">
+                item_name = #{itemName}
+            </if>
+            <if test="clientName != null and clientName != ''">
+                client_name = #{clientName}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectInfoByUserName" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM `property_pay_visit`
+        WHERE client_name = #{userName}
+    </select>
+</mapper>

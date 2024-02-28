@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.UserRepairMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.UserRepair">
+        <!--@mbg.generated-->
+        <!--@Table user_repair-->
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="phone" property="phone"/>
+        <result column="repair_info" property="repairInfo"/>
+        <result column="create_date" property="createDate"/>
+        <result column="is_solve" property="isSolve"/>
+        <result column="user_id" property="userId"/>
+        <result column="emp_id" property="empId"/>
+        <result column="result_msg" property="resultMsg"/>
+        <result column="feedback_msg" property="feedbackMsg"/>
+        <result column="score" jdbcType="VARCHAR" property="score" />
+        <result column="degree" jdbcType="VARCHAR" property="degree" />
+        <association property="employee" javaType="com.project.property.entity.Employee"
+                     column="emp_id" select="com.project.property.dao.EmployeeMapper.selectByPrimaryKey" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, user_name, phone, repair_info, create_date, is_solve, user_id, result_msg, feedback_msg, emp_id, score, degree
+    </sql>
+
+
+    <!-- 根据主键查询单条数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from user_repair
+        where id = #{id}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from user_repair
+        where id In (${ids})
+    </delete>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.UserRepair"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into user_repair
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="repairInfo != null">
+                repair_info,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="isSolve != null and isSolve != ''">
+                is_solve,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="empId != null">
+                emp_id,
+            </if>
+            <if test="resultMsg != null and resultMsg != ''">
+                result_msg,
+            </if>
+
+            <if test="feedbackMsg != null and feedbackMsg != ''">
+                feedback_msg,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="repairInfo != null">
+                #{repairInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="isSolve != null and isSolve != ''">
+                #{isSolve},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="empId != null">
+                #{empId},
+            </if>
+            <if test="resultMsg != null and resultMsg != ''">
+                #{resultMsg},
+            </if>
+            <if test="feedbackMsg != null and feedbackMsg != ''">
+                #{feedbackMsg},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.UserRepair">
+        <!--@mbg.generated-->
+        update user_repair
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="repairInfo != null">
+                repair_info = #{repairInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="isSolve != null and isSolve != ''">
+                is_solve = #{isSolve},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="empId != null">
+                emp_id = #{empId},
+            </if>
+            <if test="resultMsg != null and resultMsg != ''">
+                result_msg = #{resultMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="feedbackMsg != null and feedbackMsg != ''">
+                feedback_msg = #{feedbackMsg},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据条件查询数据 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from `user_repair`
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by is_solve
+    </select>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `user_repair`
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByIdAndStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_repair
+        where is_solve = 0
+          AND id IN (${ids})
+    </select>
+
+    <update id="updateInfoByUserId">
+        UPDATE `user_repair`
+        SET user_name = #{userName},
+            phone = #{phone}
+        WHERE user_id = #{userId}
+    </update>
+</mapper>

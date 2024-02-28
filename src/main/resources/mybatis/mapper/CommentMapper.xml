@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.project.property.entity.Comment">
+    <!--@mbg.generated-->
+    <!--@Table `comment`-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="notice_id" jdbcType="INTEGER" property="noticeId" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="degree" jdbcType="VARCHAR" property="degree" />
+    <association property="user" javaType="com.project.property.entity.User">
+      <id column="user_id" property="id"/>
+      <result column="user_name" property="userName"/>
+      <result column="phone" property="phone"/>
+      <result column="card_num" property="cardNum"/>
+      <result column="sex" property="sex"/>
+      <result column="nation" property="nation"/>
+      <result column="register_address" property="registerAddress"/>
+      <result column="email" property="email"/>
+    </association>
+    <association property="notice" javaType="com.project.property.entity.Notice">
+      <id column="notice_id" jdbcType="INTEGER" property="id" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="nContent" jdbcType="VARCHAR" property="content" />
+      <result column="nCreateDate" jdbcType="VARCHAR" property="createDate" />
+      <result column="news_img" jdbcType="VARCHAR" property="newsImg" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    c.id, c.user_id, c.content, c.create_date, notice_id, c.is_delete, c.score, c.degree
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from `comment` c
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from `comment`
+    where id IN (${ids})
+  </delete>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.Comment" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `comment`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="noticeId != null">
+        notice_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticeId != null">
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.Comment">
+    <!--@mbg.generated-->
+    update `comment`
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticeId != null">
+        notice_id = #{noticeId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectDataByParam" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    , u.user_name, phone, card_num, sex, nation, register_address, email
+    , title, n.content nContent, n.create_date nCreateDate, news_img
+    FROM comment c
+    INNER JOIN `user` u on c.user_id = u.id
+    INNER JOIN notice n on c.notice_id = n.id
+    WHERE
+    <if test="type == 1">
+        c.is_delete != 1
+    </if>
+    <if test="type == null or type == ''">
+        c.is_delete = 0
+    </if>
+    <if test="comment.user != null and comment.user.userName != null and comment.user.userName != ''">
+      AND u.user_name LIKE CONCAT('%', TRIM(#{comment.user.userName}), '%')
+    </if>
+    <if test="comment.notice != null and comment.notice.title != null and comment.notice.title != ''">
+      AND n.title LIKE CONCAT('%', TRIM(#{comment.notice.title}), '%')
+    </if>
+    <if test="comment.userId != null">
+      AND c.user_id = #{comment.userId}
+    </if>
+    ORDER BY c.create_date DESC, c.id DESC
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    SELECT COUNT(1)
+    FROM comment c
+    INNER JOIN `user` u on c.user_id = u.id
+    INNER JOIN notice n on c.notice_id = n.id
+    WHERE
+    <if test="type == 1">
+      c.is_delete != 1
+    </if>
+    <if test="type == null or type == ''">
+      c.is_delete = 0
+    </if>
+    <if test="comment.user != null and comment.user.userName != null and comment.user.userName != ''">
+      AND u.user_name LIKE CONCAT('%', TRIM(#{comment.user.userName}), '%')
+    </if>
+    <if test="comment.notice != null and comment.notice.title != null and comment.notice.title != ''">
+      AND n.title LIKE CONCAT('%', TRIM(#{comment.notice.title}), '%')
+    </if>
+    <if test="comment.userId != null">
+      AND c.user_id = #{comment.userId}
+    </if>
+  </select>
+
+  <select id="selectInfoByUserId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM comment c
+    WHERE user_id IN (${ids}) AND is_delete = 0
+  </select>
+
+  <delete id="updateByDelete">
+    UPDATE comment
+    SET is_delete = #{type}
+    WHERE id IN (${ids})
+  </delete>
+
+  <!-- 根据公告ID查询相关评价信息 -->
+  <select id="selectInfoByNoticeId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    , u.user_name, phone, card_num, sex, nation, register_address, email
+    FROM comment c
+    INNER JOIN user u on c.user_id = u.id
+    WHERE notice_id = #{noticeId} AND is_delete = 0
+    ORDER BY create_date DESC
+  </select>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.project.property.entity.Employee">
+    <!--@mbg.generated-->
+    <!--@Table employee-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="emp_phone" jdbcType="VARCHAR" property="empPhone" />
+    <result column="emp_sex" jdbcType="VARCHAR" property="empSex" />
+    <result column="emp_id_card" jdbcType="VARCHAR" property="empIdCard" />
+    <result column="emp_age" jdbcType="VARCHAR" property="empAge" />
+    <result column="emp_address" jdbcType="VARCHAR" property="empAddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, emp_name, emp_phone, emp_sex, emp_id_card, emp_age, emp_address
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from employee
+    where id IN (${ids})
+  </delete>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.Employee" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empName != null">
+        emp_name,
+      </if>
+      <if test="empPhone != null">
+        emp_phone,
+      </if>
+      <if test="empSex != null">
+        emp_sex,
+      </if>
+      <if test="empIdCard != null">
+        emp_id_card,
+      </if>
+      <if test="empAge != null">
+        emp_age,
+      </if>
+      <if test="empAddress != null">
+        emp_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empName != null">
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empPhone != null">
+        #{empPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="empSex != null">
+        #{empSex,jdbcType=VARCHAR},
+      </if>
+      <if test="empIdCard != null">
+        #{empIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="empAge != null">
+        #{empAge,jdbcType=VARCHAR},
+      </if>
+      <if test="empAddress != null">
+        #{empAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.Employee">
+    <!--@mbg.generated-->
+    update employee
+    <set>
+      <if test="empName != null">
+        emp_name = #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empPhone != null">
+        emp_phone = #{empPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="empSex != null">
+        emp_sex = #{empSex,jdbcType=VARCHAR},
+      </if>
+      <if test="empIdCard != null">
+        emp_id_card = #{empIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="empAge != null">
+        emp_age = #{empAge,jdbcType=VARCHAR},
+      </if>
+      <if test="empAddress != null">
+        emp_address = #{empAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectDataByParam" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM employee
+    <where>
+      <if test="empName != null and empName != ''">
+        AND emp_name LIKE CONCAT('%', #{empName}, '%')
+      </if>
+      <if test="empPhone != null and empPhone != ''">
+        AND emp_phone LIKE CONCAT('%', #{empPhone}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="selectDataCount" resultType="java.lang.Integer">
+    SELECT COUNT(1)
+    FROM employee
+    <where>
+      <if test="empName != null and empName != ''">
+        AND emp_name LIKE CONCAT('%', #{empName}, '%')
+      </if>
+      <if test="empPhone != null and empPhone != ''">
+        AND emp_phone LIKE CONCAT('%', #{empPhone}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

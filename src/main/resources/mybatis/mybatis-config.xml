@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 打印sql日志 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!-- 引入分页插件 -->
+    <!-- 要求3.3版本以上的mybatis -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 分页参数合理化，即不可能到达-1页之类不合理的页数 -->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+</configuration>

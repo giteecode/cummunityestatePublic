@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.HouseInfoMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.HouseInfo">
+        <!--@mbg.generated-->
+        <!--@Table house_info-->
+        <id column="id" property="id"/>
+        <result column="parent_building" property="parentBuilding"/>
+        <result column="parent_unit" property="parentUnit"/>
+        <result column="parent_floor" property="parentFloor"/>
+        <result column="house_num" property="houseNum"/>
+        <result column="house_area" property="houseArea"/>
+        <result column="house_type" property="houseType"/>
+        <result column="is_sold" property="isSold"/>
+        <result column="owner_name" property="ownerName"/>
+        <result column="phone" property="phone"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, parent_building, parent_unit, parent_floor, house_num, house_area, house_type,
+        is_sold, owner_name, phone, user_id
+    </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from house_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from house_info
+        where id IN (${ids})
+    </delete>
+
+    <!-- 全量插入 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.HouseInfo"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into house_info (parent_building, parent_unit, parent_floor, user_id,
+        house_num, house_area, house_type, is_sold, owner_name, phone)
+        values (#{parentBuilding,jdbcType=VARCHAR}, #{parentUnit,jdbcType=VARCHAR}, #{parentFloor,jdbcType=VARCHAR},
+        #{userId}, #{houseNum,jdbcType=VARCHAR}, #{houseArea,jdbcType=VARCHAR}, #{houseType,jdbcType=VARCHAR},
+        #{isSold,jdbcType=VARCHAR}, #{ownerName}, #{phone})
+    </insert>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.HouseInfo"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into house_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentBuilding != null">
+                parent_building,
+            </if>
+            <if test="parentUnit != null">
+                parent_unit,
+            </if>
+            <if test="parentFloor != null">
+                parent_floor,
+            </if>
+            <if test="houseNum != null">
+                house_num,
+            </if>
+            <if test="houseArea != null">
+                house_area,
+            </if>
+            <if test="houseType != null">
+                house_type,
+            </if>
+            <if test="isSold != null">
+                is_sold,
+            </if>
+            <if test="ownerName != null and ownerName != ''">
+                owner_name,
+            </if>
+            <if test="phone != null and phone != ''">
+                phone,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentBuilding != null">
+                #{parentBuilding,jdbcType=VARCHAR},
+            </if>
+            <if test="parentUnit != null">
+                #{parentUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="parentFloor != null">
+                #{parentFloor,jdbcType=VARCHAR},
+            </if>
+            <if test="houseNum != null">
+                #{houseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="houseArea != null">
+                #{houseArea,jdbcType=VARCHAR},
+            </if>
+            <if test="houseType != null">
+                #{houseType,jdbcType=VARCHAR},
+            </if>
+            <if test="isSold != null">
+                #{isSold,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerName != null and ownerName != ''">
+                #{ownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.HouseInfo">
+        <!--@mbg.generated-->
+        update house_info
+        <set>
+            <if test="parentBuilding != null">
+                parent_building = #{parentBuilding,jdbcType=VARCHAR},
+            </if>
+            <if test="parentUnit != null">
+                parent_unit = #{parentUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="parentFloor != null">
+                parent_floor = #{parentFloor,jdbcType=VARCHAR},
+            </if>
+            <if test="houseNum != null">
+                house_num = #{houseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="houseArea != null">
+                house_area = #{houseArea,jdbcType=VARCHAR},
+            </if>
+            <if test="houseType != null">
+                house_type = #{houseType,jdbcType=VARCHAR},
+            </if>
+            <if test="isSold != null">
+                is_sold = #{isSold,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerName != null and ownerName != ''">
+                owner_name = #{ownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.HouseInfo">
+        <!--@mbg.generated-->
+        update house_info
+        set parent_building = #{parentBuilding,jdbcType=VARCHAR},
+        parent_unit = #{parentUnit,jdbcType=VARCHAR},
+        parent_floor = #{parentFloor,jdbcType=VARCHAR},
+        house_num = #{houseNum,jdbcType=VARCHAR},
+        house_area = #{houseArea,jdbcType=VARCHAR},
+        house_type = #{houseType,jdbcType=VARCHAR},
+        is_sold = #{isSold,jdbcType=VARCHAR},
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        user_id = #{userId}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据主键更新 -->
+    <update id="updateSoldInfoByPrimaryKey" parameterType="com.project.property.entity.HouseInfo">
+        <!--@mbg.generated-->
+        update house_info
+        set is_sold = #{isSold,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据条件查询 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `house_info`
+        <where>
+            <if test="houseNum != null and houseNum != ''">
+                and INSTR(house_num, #{houseNum}) > 0
+            </if>
+            <if test="parentBuilding != null and parentBuilding != ''">
+                and parent_building = #{parentBuilding}
+            </if>
+            <if test="parentUnit != null and parentUnit != ''">
+                and parent_unit = #{parentUnit}
+            </if>
+            <if test="houseType != null and houseType != ''">
+                and INSTR(house_type, #{houseType}) > 0
+            </if>
+        </where>
+        order by parent_building, parent_unit, parent_floor, house_num
+    </select>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `house_info`
+        <where>
+            <if test="houseNum != null and houseNum != ''">
+                and INSTR(house_num, #{houseNum}) > 0
+            </if>
+            <if test="parentBuilding != null and parentBuilding != ''">
+                and parent_building = #{parentBuilding}
+            </if>
+            <if test="parentUnit != null and parentUnit != ''">
+                and parent_unit = #{parentUnit}
+            </if>
+            <if test="houseType != null and houseType != ''">
+                and INSTR(house_type, #{houseType}) > 0
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据传入的多个ID查询信息 -->
+    <select id="selectInfoByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `house_info`
+        where id IN (${ids})
+    </select>
+
+    <!-- 根据楼号  单元号  楼层    房间号四个条件判断 -->
+    <select id="selectByHouseInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `house_info`
+        where parent_building = #{building}
+        AND parent_unit = #{unit}
+        AND parent_floor = #{floor}
+        AND house_num = #{houseNum}
+    </select>
+
+    <update id="updateInfoByUserId">
+        UPDATE `house_info`
+        SET owner_name = #{ownerName},
+            phone      = #{phone}
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="selectInfoByBuildingNum" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM house_info
+        WHERE parent_building IN (${nums})
+    </select>
+</mapper>

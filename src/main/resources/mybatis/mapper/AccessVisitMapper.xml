@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.AccessVisitMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.AccessVisit">
+        <!--@mbg.generated-->
+        <!--@Table access_visit-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="type1" jdbcType="VARCHAR" property="type1"/>
+        <result column="type2" jdbcType="VARCHAR" property="type2"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="health_code_path" jdbcType="VARCHAR" property="healthCodePath"/>
+        <result column="travel_code_path" jdbcType="VARCHAR" property="travelCodePath"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, user_name, phone, create_date, `type`, `desc`, `user_id`, type1, type2, health_code_path, travel_code_path
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from access_visit
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="String">
+        <!--@mbg.generated-->
+        delete from access_visit
+        where id IN (${ids})
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.project.property.entity.AccessVisit">
+        <!--@mbg.generated-->
+        insert into access_visit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="desc != null">
+                `desc`,
+            </if>
+            <if test="userId != null">
+                `user_id`,
+            </if>
+            <if test="type1 != null">
+                `type1`,
+            </if>
+            <if test="type2 != null">
+                `type2`,
+            </if>
+            <if test="healthCodePath != null">
+                `health_code_path`,
+            </if>
+            <if test="travelCodePath != null">
+                `travel_code_path`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="desc != null">
+                #{desc,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="type1 != null">
+                #{type1,jdbcType=VARCHAR},
+            </if>
+            <if test="type2 != null">
+                #{type2,jdbcType=VARCHAR},
+            </if>
+            <if test="healthCodePath != null">
+                #{healthCodePath,jdbcType=VARCHAR},
+            </if>
+            <if test="travelCodePath != null">
+                #{travelCodePath,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.AccessVisit">
+        <!--@mbg.generated-->
+        update access_visit
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据实体类作为参数查询 -->
+    <select id="selectByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from access_visit
+        <where>
+            <trim>
+                <if test="userName != null and userName != ''">
+                    and INSTR(user_name, #{userName}) > 0
+                </if>
+                <if test="userId != null">
+                    and user_id = #{userId}
+                </if>
+                <if test="createDate != null and createDate != ''">
+                    and create_date between DATE_FORMAT(#{createDateStart}, '%Y-%m-%d %H:%M:%s') and DATE_FORMAT(#{createDateEnd}, '%Y-%m-%d %H:%M:%s')
+                </if>
+            </trim>
+        </where>
+    </select>
+
+    <!-- 根据实体类作为参数查询数据总数 -->
+    <select id="selectCountByParam" resultType="int">
+        select COUNT(1)
+        from access_visit
+        <where>
+            <if test="userName != null and userName != ''">
+                INSTR(user_name, #{userName}) > 0
+            </if>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+        </where>
+    </select>
+</mapper>

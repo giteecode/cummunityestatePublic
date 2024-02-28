@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.AdminMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.Admin">
+        <!--@mbg.generated-->
+        <!--@Table `admin`-->
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="login_name" property="loginName"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, user_name, login_name, `password`, `salt`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from `admin`
+        where id = #{id}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from `admin`
+        where id = #{id}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.Admin"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `admin` (user_name, login_name, `password`, `salt`)
+        values (#{userName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.Admin"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `admin`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="salt != null">
+                `salt`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.Admin">
+        <!--@mbg.generated-->
+        update `admin`
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                `salt` = #{salt,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.Admin">
+        <!--@mbg.generated-->
+        update `admin`
+        set user_name = #{userName,jdbcType=VARCHAR},
+        login_name = #{loginName,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=VARCHAR}
+        `salt` = #{salt,jdbcType=VARCHAR}
+        where id = #{id}
+    </update>
+
+    <!-- 根据条件查询 -->
+    <select id="selectByAdmin" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from `admin`
+        <where>
+            <if test="password != null and password != ''">
+                `password` = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null and userName != ''">
+                `user_name` = #{userName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询数据总数 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `admin`
+    </select>
+
+    <!-- 根据条件查询 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from `admin`
+    </select>
+</mapper>

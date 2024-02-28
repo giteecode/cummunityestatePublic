@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.UserUnitRelationMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.UserUnitRelation">
+        <!--@mbg.generated-->
+        <!--@Table user_unit_relation-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="unit_id" jdbcType="INTEGER" property="unitId"/>
+        <result column="create_date" jdbcType="VARCHAR" property="createDate"/>
+        <result column="is_house_holder" property="isHouseHolder"/>
+        <association property="user" javaType="com.project.property.entity.User">
+            <id column="user_id" property="id"/>
+            <result column="user_name" property="userName"/>
+            <result column="phone" property="phone"/>
+            <result column="card_num" property="cardNum"/>
+            <result column="sex" property="sex"/>
+            <result column="register_address" property="registerAddress"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, user_id, unit_id, create_date, is_house_holder
+    </sql>
+
+    <sql id="Base_Column_List_2">
+        <!--@mbg.generated-->
+        a.id, user_id, unit_id, create_date, is_house_holder,
+        u.user_name, u.phone, u.card_num, u.sex, u.register_address
+    </sql>
+
+    <!-- 根据主键查询单条数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from user_unit_relation a
+                     inner join user u on a.user_id = u.id
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据主键删除数据 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from user_unit_relation
+        where id IN (${ids})
+    </delete>
+
+    <!-- 全量插入 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.UserUnitRelation"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into user_unit_relation (user_id, unit_id, create_date, is_house_holder)
+        values (#{userId,jdbcType=INTEGER}, #{unitId,jdbcType=INTEGER}, #{createDate}, #{isHouseHolder})
+    </insert>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.project.property.entity.UserUnitRelation" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into user_unit_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="unitId != null">
+                unit_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="isHouseHolder != null and isHouseHolder != ''">
+                is_house_holder
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="unitId != null">
+                #{unitId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="isHouseHolder != null and isHouseHolder != ''">
+                #{isHouseHolder}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.UserUnitRelation">
+        <!--@mbg.generated-->
+        update user_unit_relation
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="unitId != null">
+                unit_id = #{unitId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="isHouseHolder != null and isHouseHolder != ''">
+                is_house_holder = #{isHouseHolder},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.UserUnitRelation">
+        <!--@mbg.generated-->
+        update user_unit_relation
+        set user_id         = #{userId,jdbcType=INTEGER},
+            unit_id         = #{unitId,jdbcType=INTEGER},
+            create_date     = #{createDate},
+            is_house_holder = #{isHouseHolder}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据条件查询数据 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_2"/>
+        from `user_unit_relation` a
+                     inner join user u on a.user_id = u.id
+        <where>
+            <if test="unitId != null">
+                unit_id = #{unitId}
+            </if>
+        </where>
+        order by is_house_holder desc
+    </select>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `user_unit_relation` a
+                     inner join user u on a.user_id = u.id
+        <where>
+            <if test="unitId != null">
+                unit_id = #{unitId}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据传入的ID查询信息 -->
+    <select id="selectInfoByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user_unit_relation`
+        <where>
+            <if test="houseIds != null and houseIds != ''">
+                unit_id IN (${houseIds})
+            </if>
+            <if test="userIds != null and userIds != ''">
+                AND user_id IN (${userIds})
+            </if>
+        </where>
+    </select>
+
+    <select id="selectInfoByHouseId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_unit_relation
+        where unit_id = #{id}
+          AND is_house_holder = 1
+    </select>
+
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user_unit_relation`
+        where id IN (${ids})
+    </select>
+</mapper>

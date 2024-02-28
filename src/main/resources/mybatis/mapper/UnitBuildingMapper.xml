@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.UnitBuildingMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.UnitBuilding">
+        <!--@mbg.generated-->
+        <!--@Table unit_building-->
+        <id column="id" property="id"/>
+        <result column="building_num" jdbcType="INTEGER" property="buildingNum"/>
+        <result column="unit_count" jdbcType="INTEGER" property="unitCount"/>
+        <result column="floor_count" jdbcType="INTEGER" property="floorCount"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, building_num, unit_count, floor_count
+    </sql>
+
+    <!-- 根据主键查询数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from unit_building
+        where id = #{id}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from unit_building
+        where id IN (${ids})
+    </delete>
+
+    <!-- 全量插入 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.UnitBuilding"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into unit_building (building_num, unit_count, floor_count)
+        values (#{buildingNum}, #{unitCount}, #{floorCount})
+    </insert>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.project.property.entity.UnitBuilding" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into unit_building
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="buildingNum != null">
+                building_num,
+            </if>
+            <if test="unitCount != null">
+                unit_count,
+            </if>
+            <if test="floorCount != null">
+                floor_count,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="buildingNum != null">
+                #{buildingNum},
+            </if>
+            <if test="unitCount != null">
+                #{unitCount},
+            </if>
+            <if test="floorCount != null">
+                #{floorCount},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.UnitBuilding">
+        <!--@mbg.generated-->
+        update unit_building
+        <set>
+            <if test="buildingNum != null">
+                building_num = #{buildingNum},
+            </if>
+            <if test="unitCount != null">
+                unit_count = #{unitCount},
+            </if>
+            <if test="floorCount != null">
+                floor_count = #{floorCount},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.UnitBuilding">
+        <!--@mbg.generated-->
+        update unit_building
+        set building_num = #{buildingNum},
+            unit_count   = #{unitCount},
+            floor_count  = #{floorCount}
+        where id = #{id}
+    </update>
+
+    <!-- 根据条件查询 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `unit_building`
+        <where>
+            <if test="buildingNum != null">
+                building_num = #{buildingNum,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `unit_building`
+        <where>
+            <if test="buildingNum != null">
+                building_num = #{buildingNum,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据传入的楼宇号查询楼宇信息 -->
+    <select id="selectInfoByNum" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `unit_building`
+        where building_num = #{num}
+    </select>
+
+    <!-- 根据多个ID查询信息 -->
+    <select id="selectInfoByIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from `unit_building`
+        where id IN (${ids})
+    </select>
+</mapper>

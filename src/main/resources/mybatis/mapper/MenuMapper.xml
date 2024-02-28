@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.Menu">
+        <!--@mbg.generated-->
+        <!--@Table menu-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="icon_name" jdbcType="VARCHAR" property="iconName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, parent_id, menu_name, url, icon_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from menu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from menu
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.Menu"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into menu (parent_id, menu_name, url,
+                          icon_name)
+        values (#{parentId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+                #{iconName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.Menu"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="menuName != null">
+                menu_name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="iconName != null">
+                icon_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="iconName != null">
+                #{iconName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.Menu">
+        <!--@mbg.generated-->
+        update menu
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="menuName != null">
+                menu_name = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="iconName != null">
+                icon_name = #{iconName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.Menu">
+        <!--@mbg.generated-->
+        update menu
+        set parent_id = #{parentId,jdbcType=INTEGER},
+            menu_name = #{menuName,jdbcType=VARCHAR},
+            url       = #{url,jdbcType=VARCHAR},
+            icon_name = #{iconName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByAllInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from menu
+    </select>
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.CarParkMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.CarPark">
+        <!--@mbg.generated-->
+        <!--@Table car_park-->
+        <id column="id" property="id"/>
+        <result column="park_state" property="parkState"/>
+        <result column="car_park_type" property="carParkType"/>
+        <result column="car_park_info" property="carParkInfo"/>
+    </resultMap>
+    <!-- 收费信息 -->
+    <resultMap id="BaseResultMap2" type="com.project.property.entity.CarParkCharge">
+        <!--@mbg.generated-->
+        <!--@Table car_park_charge-->
+        <id column="id" property="id"/>
+        <result column="owner_name" property="ownerName"/>
+        <result column="phone" property="phone"/>
+        <result column="user_id" property="userId"/>
+        <result column="car_park_id" property="carParkId"/>
+        <result column="fee" property="fee"/>
+        <result column="charge_date" property="chargeDate"/>
+        <result column="read_name" property="readName"/>
+        <result column="pay_type" property="payType"/>
+        <!-- 映射部分收费项信息 -->
+        <association property="carParkInfo" resultMap="BaseResultMap">
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, owner_name, phone, park_state, car_park_type, car_park_info
+    </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from car_park
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from car_park
+        where id IN (${ids})
+    </delete>
+
+    <!-- 全部插入 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.CarPark"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into car_park (owner_name, phone, park_state, car_park_type, car_park_info)
+        values (#{ownerName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{parkState,jdbcType=VARCHAR}, #{carParkType},
+        #{carParkInfo})
+    </insert>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.CarPark"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into car_park
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ownerName != null">
+                owner_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="parkState != null">
+                park_state,
+            </if>
+            <if test="carParkType != null and carParkType != ''">
+                car_park_type,
+            </if>
+            <if test="carParkInfo != null and carParkInfo != ''">
+                car_park_info,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ownerName != null">
+                #{ownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="parkState != null">
+                #{parkState,jdbcType=VARCHAR},
+            </if>
+            <if test="carParkType != null and carParkType != ''">
+                #{carParkType,jdbcType=VARCHAR},
+            </if>
+            <if test="carParkInfo != null and carParkInfo != ''">
+                #{carParkInfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.CarPark">
+        <!--@mbg.generated-->
+        update car_park
+        <set>
+            <if test="ownerName != null">
+                owner_name = #{ownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="parkState != null">
+                park_state = #{parkState,jdbcType=VARCHAR},
+            </if>
+            <if test="carParkType != null and carParkType != ''">
+                car_park_type = #{carParkType,jdbcType=VARCHAR},
+            </if>
+            <if test="carParkInfo != null and carParkInfo != ''">
+                car_park_info = #{carParkInfo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.CarPark">
+        <!--@mbg.generated-->
+        update car_park
+        set owner_name = #{ownerName,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        park_state = #{parkState,jdbcType=VARCHAR},
+        car_park_type = #{carParkType,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `car_park`
+        <where>
+            <if test="ownerName != null and ownerName != ''">
+                INSTR(owner_name, #{ownerName}) > 0
+            </if>
+            <if test="phone != null and phone != ''">
+                AND INSTR(phone, #{phone}) > 0
+            </if>
+            <if test="parkState != null and parkState != ''">
+                AND park_state = #{parkState}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据条件查询 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `car_park`
+        <where>
+            <if test="ownerName != null and ownerName != ''">
+                INSTR(owner_name, #{ownerName}) > 0
+            </if>
+            <if test="phone != null and phone != ''">
+                AND INSTR(phone, #{phone}) > 0
+            </if>
+            <if test="parkState != null and parkState != ''">
+                AND park_state = #{parkState}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据用户名查询 -->
+    <select id="selectInfoByUserName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM `car_park`
+        WHERE `owner_name` = #{userName}
+    </select>
+    <select id="selectInfoByIds" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM car_park
+        WHERE id IN (${ids})
+    </select>
+
+    <!-- 新增车位收费信息 -->
+    <insert id="insertCarParkCharge" keyColumn="id" keyProperty="id"
+            parameterType="com.project.property.entity.CarParkCharge"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into car_park_charge (user_id, car_park_id, owner_name, phone, fee, charge_date, read_name, pay_type)
+        values (#{userId}, #{carParkId}, #{ownerName}, #{phone}, #{fee}, #{chargeDate}, #{readName}, #{payType})
+    </insert>
+
+    <!-- 查询 -->
+    <select id="selectCarParkCharge" resultMap="BaseResultMap2">
+        <!--@mbg.generated-->
+        select t1.*, t2.* from car_park_charge t1 left join car_park t2
+        on t1.car_park_id = t2.id
+        <where>
+            <if test="ownerName != null and ownerName != ''">
+                INSTR(owner_name, #{ownerName}) > 0
+            </if>
+            <if test="phone != null and phone != ''">
+                AND INSTR(phone, #{phone}) > 0
+            </if>
+            <if test="userId != null and userId != ''">
+                AND user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <!-- 查询数据总量 -->
+    <select id="selectCarParkDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `car_park_charge`
+        <where>
+            <if test="ownerName != null and ownerName != ''">
+                INSTR(owner_name, #{ownerName}) > 0
+            </if>
+            <if test="phone != null and phone != ''">
+                AND INSTR(phone, #{phone}) > 0
+            </if>
+            <if test="userId != null and userId != ''">
+                AND user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

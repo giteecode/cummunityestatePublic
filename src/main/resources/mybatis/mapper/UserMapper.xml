@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.User">
+        <!--@mbg.generated-->
+        <!--@Table `user`-->
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="phone" property="phone"/>
+        <result column="card_num" property="cardNum"/>
+        <result column="sex" property="sex"/>
+        <result column="nation" property="nation"/>
+        <result column="register_address" property="registerAddress"/>
+        <result column="email" property="email"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, user_name, phone, card_num, sex, nation, register_address, email
+    </sql>
+
+    <!-- 根据主键查询单条数据 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from `user`
+        where id = #{id}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from `user`
+        where id IN (${ids})
+    </delete>
+
+    <!-- 全量插入 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.User"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `user` (user_name, phone,
+        card_num, sex, nation,register_address, email, password)
+        values (#{userName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{cardNum,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR},
+        #{registerAddress,jdbcType=VARCHAR}, #{email}, #{password})
+    </insert>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.User"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="cardNum != null">
+                card_num,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="nation != null">
+                nation,
+            </if>
+            <if test="registerAddress != null">
+                register_address,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null and password != ''">
+                password,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="cardNum != null">
+                #{cardNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="registerAddress != null">
+                #{registerAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                #{password,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.User">
+        <!--@mbg.generated-->
+        update `user`
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="cardNum != null">
+                card_num = #{cardNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                nation = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="registerAddress != null">
+                register_address = #{registerAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据主键更新 -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.User">
+        <!--@mbg.generated-->
+        update `user`
+        set user_name = #{userName,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        card_num = #{cardNum,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        nation = #{nation,jdbcType=VARCHAR},
+        register_address = #{registerAddress,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR}
+        where id = #{id}
+    </update>
+
+    <!-- 根据条件查询数据 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from `user`
+        <where>
+            <if test="userName != null and userName != ''">
+                INSTR(user_name, #{userName}) > 0
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询数据总量 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select COUNT(1)
+        from `user`
+        <where>
+            <if test="userName != null and userName != ''">
+                INSTR(user_name, #{userName}) > 0
+            </if>
+        </where>
+    </select>
+
+    <select id="selectLoginByParam" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from `user`
+        where user_name = #{userName} and password = #{password}
+    </select>
+
+    <select id="selectUserByParam" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from `user`
+        where user_name = #{userName} and phone = #{phone}
+    </select>
+</mapper>

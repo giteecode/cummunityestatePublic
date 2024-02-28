@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.property.dao.PropertyChargeVisitMapper">
+    <resultMap id="BaseResultMap" type="com.project.property.entity.PropertyChargeVisit">
+        <!--@mbg.generated-->
+        <!--@Table property_charge_visit-->
+        <id column="id" property="id"/>
+        <result column="item_id" property="itemId"/>
+        <result column="item_name" property="itemName"/>
+        <result column="building_num" property="buildingNum"/>
+        <result column="unit_num" property="unitNum"/>
+        <result column="house_id" property="houseId"/>
+        <result column="house_num" property="houseNum"/>
+        <result column="user_name" property="userName"/>
+        <result column="phone" property="phone"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="prev_month_count" jdbcType="INTEGER" property="prevMonthCount"/>
+        <result column="curr_month_count" jdbcType="INTEGER" property="currMonthCount"/>
+        <result column="use_count" jdbcType="INTEGER" property="useCount"/>
+        <result column="visit_date" property="visitDate"/>
+        <result column="read_date" property="readDate"/>
+        <result column="read_name" property="readName"/>
+        <result column="visit_status" property="visitStatus"/>
+        <!-- 映射部分房间信息 -->
+        <association property="houseInfo" javaType="com.project.property.entity.HouseInfo">
+            <id column="house_id" property="id"/>
+            <result column="house_area" property="houseArea"/>
+        </association>
+        <!-- 映射部分收费项信息 -->
+        <association property="propertyChargeItem" javaType="com.project.property.entity.PropertyChargeItem">
+            <id column="item_id" property="id"/>
+            <result column="price_desc" property="priceDesc"/>
+            <result column="item_price" property="itemPrice"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, item_id,item_name, building_num, unit_num, house_num, user_name, price, prev_month_count,
+        curr_month_count, use_count, visit_date, read_date, read_name, visit_status, house_id, phone
+    </sql>
+    <sql id="Base_Column_List_2">
+        <!--@mbg.generated-->
+        a.id, a.item_id,a.item_name, a.building_num, a.unit_num, a.house_num, a.user_name, a.price, a.prev_month_count,
+        a.curr_month_count, a.use_count, a.visit_date, a.read_date, a.read_name, a.visit_status, a.house_id, a.phone,
+        hi.house_area,
+        pci.price_desc, pci.item_price
+    </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List_2"/>
+        from property_charge_visit a
+                     inner join house_info hi on a.house_id = hi.id
+                     inner join property_charge_item pci on a.item_id = pci.id
+        where a.id = #{id}
+    </select>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from property_charge_visit
+        where id = #{id}
+    </delete>
+
+    <!-- 全量插入数据 -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.project.property.entity.PropertyChargeVisit"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into property_charge_visit (item_id, building_num, unit_num,
+                                           house_num, user_name, price,
+                                           prev_month_count, curr_month_count, use_count,
+                                           visit_date, read_date, read_name,
+                                           visit_status, item_name, house_id, phone)
+        values (#{itemId}, #{buildingNum,jdbcType=VARCHAR}, #{unitNum,jdbcType=VARCHAR},
+                #{houseNum,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{price},
+                #{prevMonthCount}, #{currMonthCount}, #{useCount},
+                #{visitDate}, #{readDate}, #{readName,jdbcType=VARCHAR},
+                #{visitStatus,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, #{houseId}, #{phone})
+    </insert>
+
+    <!-- 选择性插入 -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.project.property.entity.PropertyChargeVisit" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into property_charge_visit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="itemId != null">
+                item_id,
+            </if>
+            <if test="buildingNum != null">
+                building_num,
+            </if>
+            <if test="unitNum != null">
+                unit_num,
+            </if>
+            <if test="houseNum != null">
+                house_num,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="prevMonthCount != null">
+                prev_month_count,
+            </if>
+            <if test="currMonthCount != null">
+                curr_month_count,
+            </if>
+            <if test="useCount != null">
+                use_count,
+            </if>
+            <if test="visitDate != null">
+                visit_date,
+            </if>
+            <if test="readDate != null">
+                read_date,
+            </if>
+            <if test="readName != null">
+                read_name,
+            </if>
+            <if test="visitStatus != null">
+                visit_status,
+            </if>
+            <if test="itemName != null and itemName != ''">
+                item_name,
+            </if>
+            <if test="houseId != null and houseId != ''">
+                house_id,
+            </if>
+            <if test="phone != null and phone != ''">
+                phone
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="itemId != null">
+                #{itemId},
+            </if>
+            <if test="buildingNum != null">
+                #{buildingNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNum != null">
+                #{unitNum,jdbcType=VARCHAR},
+            </if>
+            <if test="houseNum != null">
+                #{houseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="prevMonthCount != null">
+                #{prevMonthCount},
+            </if>
+            <if test="currMonthCount != null">
+                #{currMonthCount},
+            </if>
+            <if test="useCount != null">
+                #{useCount},
+            </if>
+            <if test="visitDate != null">
+                #{visitDate},
+            </if>
+            <if test="readDate != null">
+                #{readDate},
+            </if>
+            <if test="readName != null">
+                #{readName,jdbcType=VARCHAR},
+            </if>
+            <if test="visitStatus != null">
+                #{visitStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null and itemName != ''">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="houseId != null and houseId != ''">
+                #{houseId},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键选择性更新 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.property.entity.PropertyChargeVisit">
+        <!--@mbg.generated-->
+        update property_charge_visit
+        <set>
+            <if test="itemId != null">
+                item_id = #{itemId},
+            </if>
+            <if test="buildingNum != null">
+                building_num = #{buildingNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNum != null">
+                unit_num = #{unitNum,jdbcType=VARCHAR},
+            </if>
+            <if test="houseNum != null">
+                house_num = #{houseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="prevMonthCount != null">
+                prev_month_count = #{prevMonthCount},
+            </if>
+            <if test="currMonthCount != null">
+                curr_month_count = #{currMonthCount},
+            </if>
+            <if test="useCount != null">
+                use_count = #{useCount},
+            </if>
+            <if test="visitDate != null">
+                visit_date = #{visitDate},
+            </if>
+            <if test="readDate != null">
+                read_date = #{readDate},
+            </if>
+            <if test="readName != null">
+                read_name = #{readName,jdbcType=VARCHAR},
+            </if>
+            <if test="visitStatus != null">
+                visit_status = #{visitStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null and itemName != ''">
+                item_name = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="houseId != null and houseId != ''">
+                house_id = #{houseId},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据主键更新信息 -->
+    <update id="updateByPrimaryKey" parameterType="com.project.property.entity.PropertyChargeVisit">
+        <!--@mbg.generated-->
+        update property_charge_visit
+        set item_id          = #{itemId},
+            building_num     = #{buildingNum,jdbcType=VARCHAR},
+            unit_num         = #{unitNum,jdbcType=VARCHAR},
+            house_num        = #{houseNum,jdbcType=VARCHAR},
+            user_name        = #{userName,jdbcType=VARCHAR},
+            price            = #{price},
+            prev_month_count = #{prevMonthCount},
+            curr_month_count = #{currMonthCount},
+            use_count        = #{useCount},
+            visit_date       = #{visitDate},
+            read_date        = #{readDate},
+            read_name        = #{readName,jdbcType=VARCHAR},
+            item_name        = #{itemName,jdbcType=VARCHAR},
+            visit_status     = #{visitStatus,jdbcType=VARCHAR},
+            phone            = #{phone,jdbcType=VARCHAR},
+            house_id         = #{houseId}
+        where id = #{id}
+    </update>
+
+    <!-- 根据条件查询数据 -->
+    <select id="selectDataByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `property_charge_visit`
+        <where>
+            <if test="visitStatus != null and visitStatus != ''">
+                visit_status = #{visitStatus}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND INSTR(user_name, #{userName}) > 0
+            </if>
+            <if test="itemId != null">
+                AND item_id = #{itemId}
+            </if>
+        </where>
+        order by visit_status DESC, read_date DESC, id
+    </select>
+
+    <!-- 查询数据总数 -->
+    <select id="selectDataCount" resultType="java.lang.Integer">
+        select count(1)
+        from `property_charge_visit`
+        <where>
+            <if test="visitStatus != null and visitStatus != ''">
+                visit_status = #{visitDate}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND INSTR(user_name, #{userName}) > 0
+            </if>
+            <if test="itemId != null">
+                AND item_id = #{itemId}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据传入的ID查询数据 -->
+    <select id="selectInfoByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `property_charge_visit`
+        where item_id IN(${ids})
+    </select>
+
+    <!-- 根据收费项和房号查询该房间最近一次的缴费记录 -->
+    <select id="selectByItemIdAndHouseNum" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from property_charge_visit
+        where item_id = #{itemId}
+          AND house_num = #{houseNum}
+        order by read_date DESC
+        limit 1
+    </select>
+</mapper>
